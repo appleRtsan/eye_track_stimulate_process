@@ -295,7 +295,7 @@ while run and not Draw_init:
     end = time.time()
     while mouse_flag == 2:
         clock.tick(FPS)
-        
+        VW_all.write(frame)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
