@@ -103,7 +103,7 @@ class BlackDot(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.raw_image, (self.radius, self.radius))
         self.rect.x = self.rect.x + X + 300
         self.rect.y = self.rect.y + Y + 300
-        print("showup!",X,Y)
+        # print("showup!",X,Y)
         pygame.display.update()
 
 class Dot(pygame.sprite.Sprite):
@@ -145,7 +145,7 @@ class Dot(pygame.sprite.Sprite):
 def draw_init():
     font_name = pygame.font.match_font('arial') 
     font = pygame.font.Font(font_name, 100)
-    text_surface = font.render("right click to start",True,(255,255,255))
+    text_surface = font.render("               right click to start",True,(255,255,255))
     text_rect = text_surface.get_rect()
     text_rect.centerx = 800
     text_rect.y = 500
@@ -155,6 +155,8 @@ def draw_init():
 all_sprite = pygame.sprite.Group()
 
 dot_x = random.randint(100,ALL_WIDTH -100 )
+new_dot_x = -300
+new_dot_y = -300
 dot_y = random.randint(100,ALL_HEIGHT - 100)
 dot = Dot(dot_x, dot_y)
 black_dot = BlackDot()
@@ -197,7 +199,7 @@ if Draw_init == True:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     mouse_buttons = pygame.mouse.get_pressed()
                     if mouse_buttons[2]:
-                            print("right mouse button")
+                            # print("right mouse button")
                             Draw_init = False
                             screen = pygame.display.set_mode((ALL_WIDTH,ALL_HEIGHT))
                             break
@@ -240,10 +242,10 @@ while run and not Draw_init:
     elif dot.zoomtime == 3:
         if random_LR == 0:
             L.showup(dot_x, dot_y)
-            print("show_L")
+            # print("show_L")
         elif random_LR == 1:
             R.showup(dot_x, dot_y)
-            print("show_R")
+            # print("show_R")
         dot.zoomornot = 0
         dot.boundaryornot = 0
         dot.zoomtime = 0
@@ -251,7 +253,7 @@ while run and not Draw_init:
     
     if R.showuptime <= 2 and R.showuptime > 0 :
         R.showup(dot_x, dot_y)
-        print("showing...")
+        # print("showing...")
     
     elif R.showuptime == 3:
         screen = pygame.display.set_mode((ALL_WIDTH,ALL_HEIGHT))
@@ -266,7 +268,7 @@ while run and not Draw_init:
 
     if L.showuptime <= 2 and L.showuptime > 0 :
         L.showup(dot_x, dot_y)
-        print("showing...")
+        # print("showing...")
 
     elif L.showuptime == 3:
         screen = pygame.display.set_mode((ALL_WIDTH,ALL_HEIGHT))
@@ -295,8 +297,11 @@ while run and not Draw_init:
     end = time.time()
     while mouse_flag == 2:
         clock.tick(FPS)
+        ret, frame = capture.read()
         VW_all.write(frame)
         for event in pygame.event.get():
+            ret, frame = capture.read()
+            VW_all.write(frame)
             if event.type == pygame.QUIT:
                 run = False
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -312,14 +317,20 @@ while run and not Draw_init:
 
                 elif random_LR == 0 and button_msg == "left mouse button":
                     need_time = str(time.time() - end ) 
-                    print("correct!")
+                    # print("correct!")
                     mouse_flag = 0
                     print(need_time)
                     start_record = 0
                     VW.release()
-                    print("realease")
-                    dot_x = random.randint(100,ALL_WIDTH -100)
-                    dot_y = random.randint(100,ALL_HEIGHT -100)
+                    # print("realease")
+                    new_dot_x = random.randint(100,ALL_WIDTH -100)
+                    while abs(new_dot_x - dot_x) <400:
+                        new_dot_x = random.randint(100,ALL_WIDTH -100)
+                    dot_x = new_dot_x
+                    new_dot_y = random.randint(100,ALL_HEIGHT -100)
+                    while abs(new_dot_y - dot_y) <400:
+                        new_dot_y = random.randint(100,ALL_HEIGHT -100)
+                    dot_y = new_dot_y
                     dot.changepos(dot_x,dot_y)
                     pygame.display.update()
                     # os.system("pause")
@@ -330,15 +341,21 @@ while run and not Draw_init:
                         TEST_TIME  = TEST_TIME + 1
 
                 elif random_LR == 1 and button_msg == "right mouse button":
-                    print("correct!")
+                    # print("correct!")
                     mouse_flag = 0
                     need_time = str(time.time() - end ) 
                     print(need_time)
                     start_record = 0
                     VW.release()
-                    print("realease")
-                    dot_x = random.randint(100,ALL_WIDTH -100)
-                    dot_y = random.randint(100,ALL_HEIGHT -100)
+                    # print("realease")
+                    new_dot_x = random.randint(100,ALL_WIDTH -100)
+                    while abs(new_dot_x - dot_x) <400:
+                        new_dot_x = random.randint(100,ALL_WIDTH -100)
+                    dot_x = new_dot_x
+                    new_dot_y = random.randint(100,ALL_HEIGHT -100)
+                    while abs(new_dot_y - dot_y) <400:
+                        new_dot_y = random.randint(100,ALL_HEIGHT -100)
+                    dot_y = new_dot_y
                     dot.changepos(dot_x,dot_y)
                     screen = pygame.display.set_mode((ALL_WIDTH,ALL_HEIGHT))
                     ii = ii+1
@@ -352,8 +369,14 @@ while run and not Draw_init:
                     mouse_flag = 0
                     start_record = 0
                     VW.release()
-                    dot_x = random.randint(100,ALL_WIDTH -100)
-                    dot_y = random.randint(100,ALL_HEIGHT -100)
+                    new_dot_x = random.randint(100,ALL_WIDTH -100)
+                    while abs(new_dot_x - dot_x) <400:
+                        new_dot_x = random.randint(100,ALL_WIDTH -100)
+                    dot_x = new_dot_x
+                    new_dot_y = random.randint(100,ALL_HEIGHT -100)
+                    while abs(new_dot_y - dot_y) <400:
+                        new_dot_y = random.randint(100,ALL_HEIGHT -100)
+                    dot_y = new_dot_y
                     dot.changepos(dot_x,dot_y)
                     screen = pygame.display.set_mode((ALL_WIDTH,ALL_HEIGHT))
                     black_dot.showup(-300,-300)
@@ -364,8 +387,14 @@ while run and not Draw_init:
                     mouse_flag = 0
                     start_record = 0
                     VW.release()
-                    dot_x = random.randint(100,ALL_WIDTH -100)
-                    dot_y = random.randint(100,ALL_HEIGHT -100)
+                    new_dot_x = random.randint(100,ALL_WIDTH -100)
+                    while abs(new_dot_x - dot_x) <400:
+                        new_dot_x = random.randint(100,ALL_WIDTH -100)
+                    dot_x = new_dot_x
+                    new_dot_y = random.randint(100,ALL_HEIGHT -100)
+                    while abs(new_dot_y - dot_y) <400:
+                        new_dot_y = random.randint(100,ALL_HEIGHT -100)
+                    dot_y = new_dot_y
                     dot.changepos(dot_x,dot_y)
                     screen = pygame.display.set_mode((ALL_WIDTH,ALL_HEIGHT))
                     black_dot.showup(-300,-300)
