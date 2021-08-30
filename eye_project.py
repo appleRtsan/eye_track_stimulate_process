@@ -184,7 +184,7 @@ mouse_flag = 0 # when switch to 1, read the input of mouse
 ii = 0
 start_record = 0
 TEST_TIME = 5
-
+time_log = []
 # body
 # VW = video_recorder(ii)
 if Draw_init == True:
@@ -317,12 +317,17 @@ while run and not Draw_init:
 
                 elif random_LR == 0 and button_msg == "left mouse button":
                     need_time = str(time.time() - end ) 
+                    time_log.append(need_time)
                     # print("correct!")
                     mouse_flag = 0
                     print(need_time)
                     start_record = 0
                     VW.release()
                     # print("realease")
+                    if float(need_time) > 1.5:
+                        time_log.append(ii)
+                        TEST_TIME  = TEST_TIME + 1
+
                     new_dot_x = random.randint(100,ALL_WIDTH -100)
                     while abs(new_dot_x - dot_x) <400:
                         new_dot_x = random.randint(100,ALL_WIDTH -100)
@@ -337,17 +342,20 @@ while run and not Draw_init:
                     screen = pygame.display.set_mode((ALL_WIDTH,ALL_HEIGHT))
                     ii = ii+1
                     black_dot.showup(-300,-300)
-                    if float(need_time) > 1.0:
-                        TEST_TIME  = TEST_TIME + 1
 
                 elif random_LR == 1 and button_msg == "right mouse button":
                     # print("correct!")
                     mouse_flag = 0
-                    need_time = str(time.time() - end ) 
+                    need_time = str(time.time() - end )
+                    time_log.append(need_time) 
                     print(need_time)
                     start_record = 0
                     VW.release()
                     # print("realease")
+                    if float(need_time) > 1.5:
+                        time_log.append(ii)
+                        TEST_TIME  = TEST_TIME + 1
+
                     new_dot_x = random.randint(100,ALL_WIDTH -100)
                     while abs(new_dot_x - dot_x) <400:
                         new_dot_x = random.randint(100,ALL_WIDTH -100)
@@ -362,13 +370,15 @@ while run and not Draw_init:
                     black_dot.showup(-300,-300)
                     pygame.display.update()
                     # os.system("pause")
-                    if float(need_time) > 1.0:
-                        TEST_TIME  = TEST_TIME + 1
+                    
 
                 elif random_LR == 1 and button_msg == "left mouse button":
                     mouse_flag = 0
                     start_record = 0
                     VW.release()
+                    need_time = str(time.time() - end )
+                    time_log.append(need_time) 
+                    time_log.append(ii)
                     new_dot_x = random.randint(100,ALL_WIDTH -100)
                     while abs(new_dot_x - dot_x) <400:
                         new_dot_x = random.randint(100,ALL_WIDTH -100)
@@ -387,6 +397,7 @@ while run and not Draw_init:
                     mouse_flag = 0
                     start_record = 0
                     VW.release()
+                    time_log.append(ii)
                     new_dot_x = random.randint(100,ALL_WIDTH -100)
                     while abs(new_dot_x - dot_x) <400:
                         new_dot_x = random.randint(100,ALL_WIDTH -100)
@@ -402,6 +413,9 @@ while run and not Draw_init:
                     TEST_TIME  = TEST_TIME + 1
 
     if ii == TEST_TIME:
+        with open("timelog.txt","w+") as w:
+            for l in time_log:
+                w.write(str(l)+'\n')
         break                
     
 
