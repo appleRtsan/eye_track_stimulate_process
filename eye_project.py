@@ -29,7 +29,7 @@ def video_recorder(i,X=0,Y=0):
         video_writer = cv2.VideoWriter("saved_videos/output_"+str(i)+".avi", fourcc, FPS, size, True)
     else:
         video_writer = cv2.VideoWriter("saved_videos/output_"+str(i)+"_pos(x,y)=("+X+","+Y+").avi", fourcc, FPS, size, True)
-    print("start recording new videos " +str(i) +"(" +str(X) + str(Y))
+    print("start recording new videos " +str(i) +"(" +str(X) +" "+str(Y))
     return video_writer
 
 
@@ -154,10 +154,13 @@ def draw_init():
 
 all_sprite = pygame.sprite.Group()
 
-dot_x = random.randint(100,ALL_WIDTH -100 )
-new_dot_x = -300
-new_dot_y = -300
-dot_y = random.randint(100,ALL_HEIGHT - 100)
+ONE_TO_NINE = [[1,1,1],[1,1,1],[1,1,1]]
+random_pos = random.randint(0,8)
+while  ONE_TO_NINE[random_pos//3][random_pos%3]==0:
+    random_pos = random.randint(0,8)
+dot_x = random.randint(int(100+random_pos%3*((ALL_WIDTH-100)/3)),int((random_pos%3+1)*((ALL_WIDTH -100)/3)))
+dot_y = random.randint(int(100+random_pos//3*((ALL_HEIGHT-100)/3)),int((random_pos//3+1)*((ALL_HEIGHT -100)/3)))
+ONE_TO_NINE[random_pos//3][random_pos%3]=0
 dot = Dot(dot_x, dot_y)
 black_dot = BlackDot()
 all_sprite.add(dot)
@@ -184,6 +187,7 @@ mouse_flag = 0 # when switch to 1, read the input of mouse
 ii = 0
 start_record = 0
 TEST_TIME = 5
+
 time_log = []
 # body
 # VW = video_recorder(ii)
@@ -325,17 +329,16 @@ while run and not Draw_init:
                     VW.release()
                     # print("realease")
                     if float(need_time) > 1.5:
+                        ONE_TO_NINE[random_pos//3][random_pos%3]=1
                         time_log.append(ii)
                         TEST_TIME  = TEST_TIME + 1
-
-                    new_dot_x = random.randint(100,ALL_WIDTH -100)
-                    while abs(new_dot_x - dot_x) <400:
-                        new_dot_x = random.randint(100,ALL_WIDTH -100)
-                    dot_x = new_dot_x
-                    new_dot_y = random.randint(100,ALL_HEIGHT -100)
-                    while abs(new_dot_y - dot_y) <400:
-                        new_dot_y = random.randint(100,ALL_HEIGHT -100)
-                    dot_y = new_dot_y
+                    random_pos = random.randint(0,8)
+                    while  ONE_TO_NINE[random_pos//3][random_pos%3]==0:
+                        random_pos = random.randint(0,8)
+                    dot_x = random.randint(int(100+random_pos%3*((ALL_WIDTH-100)/3)),int((random_pos%3+1)*((ALL_WIDTH -100)/3)))
+                    dot_y = random.randint(int(100+random_pos//3*((ALL_HEIGHT-100)/3)),int((random_pos//3+1)*((ALL_HEIGHT -100)/3)))
+                    print(dot_x,dot_y)
+                    ONE_TO_NINE[random_pos//3][random_pos%3]=0
                     dot.changepos(dot_x,dot_y)
                     pygame.display.update()
                     # os.system("pause")
@@ -353,17 +356,16 @@ while run and not Draw_init:
                     VW.release()
                     # print("realease")
                     if float(need_time) > 1.5:
+                        ONE_TO_NINE[random_pos//3][random_pos%3]=1
                         time_log.append(ii)
                         TEST_TIME  = TEST_TIME + 1
-
-                    new_dot_x = random.randint(100,ALL_WIDTH -100)
-                    while abs(new_dot_x - dot_x) <400:
-                        new_dot_x = random.randint(100,ALL_WIDTH -100)
-                    dot_x = new_dot_x
-                    new_dot_y = random.randint(100,ALL_HEIGHT -100)
-                    while abs(new_dot_y - dot_y) <400:
-                        new_dot_y = random.randint(100,ALL_HEIGHT -100)
-                    dot_y = new_dot_y
+                    random_pos = random.randint(0,8)
+                    while  ONE_TO_NINE[random_pos//3][random_pos%3]==0:
+                        random_pos = random.randint(0,8)
+                    dot_x = random.randint(int(100+random_pos%3*((ALL_WIDTH-100)/3)),int((random_pos%3+1)*((ALL_WIDTH -100)/3)))
+                    dot_y = random.randint(int(100+random_pos//3*((ALL_HEIGHT-100)/3)),int((random_pos//3+1)*((ALL_HEIGHT -100)/3)))
+                    print(dot_x,dot_y)
+                    ONE_TO_NINE[random_pos//3][random_pos%3]=0
                     dot.changepos(dot_x,dot_y)
                     screen = pygame.display.set_mode((ALL_WIDTH,ALL_HEIGHT))
                     ii = ii+1
@@ -379,14 +381,14 @@ while run and not Draw_init:
                     need_time = str(time.time() - end )
                     time_log.append(need_time) 
                     time_log.append(ii)
-                    new_dot_x = random.randint(100,ALL_WIDTH -100)
-                    while abs(new_dot_x - dot_x) <400:
-                        new_dot_x = random.randint(100,ALL_WIDTH -100)
-                    dot_x = new_dot_x
-                    new_dot_y = random.randint(100,ALL_HEIGHT -100)
-                    while abs(new_dot_y - dot_y) <400:
-                        new_dot_y = random.randint(100,ALL_HEIGHT -100)
-                    dot_y = new_dot_y
+                    ONE_TO_NINE[random_pos//3][random_pos%3]=1
+                    random_pos = random.randint(0,8)
+                    while  ONE_TO_NINE[random_pos//3][random_pos%3]==0:
+                        random_pos = random.randint(0,8)
+                    dot_x = random.randint(int(100+random_pos%3*((ALL_WIDTH-100)/3)),int((random_pos%3+1)*((ALL_WIDTH -100)/3)))
+                    dot_y = random.randint(int(100+random_pos//3*((ALL_HEIGHT-100)/3)),int((random_pos//3+1)*((ALL_HEIGHT -100)/3)))
+                    print(dot_x,dot_y)
+                    ONE_TO_NINE[random_pos//3][random_pos%3]=0
                     dot.changepos(dot_x,dot_y)
                     screen = pygame.display.set_mode((ALL_WIDTH,ALL_HEIGHT))
                     black_dot.showup(-300,-300)
@@ -398,14 +400,14 @@ while run and not Draw_init:
                     start_record = 0
                     VW.release()
                     time_log.append(ii)
-                    new_dot_x = random.randint(100,ALL_WIDTH -100)
-                    while abs(new_dot_x - dot_x) <400:
-                        new_dot_x = random.randint(100,ALL_WIDTH -100)
-                    dot_x = new_dot_x
-                    new_dot_y = random.randint(100,ALL_HEIGHT -100)
-                    while abs(new_dot_y - dot_y) <400:
-                        new_dot_y = random.randint(100,ALL_HEIGHT -100)
-                    dot_y = new_dot_y
+                    ONE_TO_NINE[random_pos//3][random_pos%3]=1
+                    random_pos = random.randint(0,8)
+                    while  ONE_TO_NINE[random_pos//3][random_pos%3]==0:
+                        random_pos = random.randint(0,8)
+                    dot_x = random.randint(int(100+random_pos%3*((ALL_WIDTH-100)/3)),int((random_pos%3+1)*((ALL_WIDTH -100)/3)))
+                    dot_y = random.randint(int(100+random_pos//3*((ALL_HEIGHT-100)/3)),int((random_pos//3+1)*((ALL_HEIGHT -100)/3)))
+                    print(dot_x,dot_y)
+                    ONE_TO_NINE[random_pos//3][random_pos%3]=0
                     dot.changepos(dot_x,dot_y)
                     screen = pygame.display.set_mode((ALL_WIDTH,ALL_HEIGHT))
                     black_dot.showup(-300,-300)
@@ -413,9 +415,10 @@ while run and not Draw_init:
                     TEST_TIME  = TEST_TIME + 1
 
     if ii == TEST_TIME:
-        with open("timelog.txt","w+") as w:
+        with open("saved_videos/timelog.txt","w+") as w:
             for l in time_log:
                 w.write(str(l)+'\n')
+        VW_all.release()
         break                
     
 
