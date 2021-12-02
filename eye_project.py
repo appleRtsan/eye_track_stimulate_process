@@ -233,7 +233,7 @@ while run and not Draw_init:
     if dot.zoomtime == 1:
         if start_record == 0:
             x_cm = (dot_x-840+25) / 32.1285
-            y_cm = (0-dot_y-25) / 32.1285            
+            y_cm = (0-dot_y-25) / 32.1285
             VW = video_recorder(str(ii),str(round(x_cm,2)),str(round(y_cm,2)))
             start_record = 1
             VW.write(frame)
